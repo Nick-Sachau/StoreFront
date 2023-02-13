@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Protecting Sensitive Information
+/StoreFront/StoreFront.UI.MVC/appsettings.json
+/StoreFront.UI.MVC/appsettings.json
