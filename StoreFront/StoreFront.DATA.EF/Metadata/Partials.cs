@@ -13,6 +13,32 @@ namespace StoreFront.DATA.EF.Models//Metadata
         //[ModelMetadataType(typeof(TypeMetadata))]
         //public partial class TypeMetadata { }
 
-        //make one for City, Order, Pokemon, and Type
+        [ModelMetadataType(typeof(CityMetadata))]
+        public partial class CityMetadata { }
+
+
+        [ModelMetadataType(typeof(OrderMetadata))]
+        public partial class OrderMetadata { }
+
+
+        [ModelMetadataType(typeof(OrderPokemonMetadata))]
+        public partial class OrderPokemonMetadata { }
+
+
+        [ModelMetadataType(typeof(PokemonMetadata))]
+        public partial class PokemonMetadata { }
+
+
+        [ModelMetadataType(typeof(PokemonTypeMetadata))]
+        public partial class PokemonTypeMetadata { }
+
+
+        [ModelMetadataType(typeof(TrainerDetailMetadata))]
+        public partial class TrainerDetailMetadata { }
+
+
+        [ModelMetadataType(typeof(TypeMetadata))]
+        public partial class TypeMetadata { }
+
     }
 }
