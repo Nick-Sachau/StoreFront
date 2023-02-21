@@ -1,0 +1,77 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.Models.Pokemon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PokemonName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PokemonPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PokemonDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDiscontinued)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PokemonImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PokemonBall)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PokemonName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PokemonPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PokemonDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDiscontinued)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PokemonImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PokemonBall)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PokemonId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PokemonId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PokemonId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -35,7 +35,7 @@ namespace StoreFront.DATA.EF.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;database=StoreFront;trusted_connection=true;multipleactiveresultsets=true;");
+                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=StoreFront;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
 
@@ -132,20 +132,16 @@ namespace StoreFront.DATA.EF.Models
 
             modelBuilder.Entity<City>(entity =>
             {
-                entity.Property(e => e.CityId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("CityID");
+                entity.Property(e => e.CityId).HasColumnName("CityID");
 
                 entity.Property(e => e.CityName)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.OrderId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OrderID");
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
@@ -182,9 +178,7 @@ namespace StoreFront.DATA.EF.Models
             {
                 entity.ToTable("OrderPokemon");
 
-                entity.Property(e => e.OrderPokemonId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OrderPokemonID");
+                entity.Property(e => e.OrderPokemonId).HasColumnName("OrderPokemonID");
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
