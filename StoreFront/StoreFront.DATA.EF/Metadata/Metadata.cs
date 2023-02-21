@@ -66,7 +66,6 @@ namespace StoreFront.DATA.EF.Models//Metadata
             //Primary Key
             //public int OrderPokemonId { get; set; }
 
-            
             public int OrderId { get; set; }
 
             [Range(0, short.MaxValue)]
