@@ -1,13 +1,13 @@
 ﻿@model StoreFront.DATA.EF.Models.City
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.CityName + " Details";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>City</h4>
+    @*<h4>City</h4>*@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -19,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CityId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.CityId">Modify</a> |
+    <a asp-action="Index">Back to Cities</a>
 </div>

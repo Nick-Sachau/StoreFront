@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<StoreFront.DATA.EF.Models.Pokemon>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pokemon";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Pokemon</a>
 </p>
 <table class="table">
     <thead>
@@ -67,7 +67,7 @@
                 @Html.DisplayFor(modelItem => item.City.CityName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PokemonId">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.PokemonId">Modify</a> |
                 <a asp-action="Details" asp-route-id="@item.PokemonId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.PokemonId">Delete</a>
             </td>

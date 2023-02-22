@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<StoreFront.DATA.EF.Models.City>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cities";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New City</a>
 </p>
 <table class="table">
     <thead>
@@ -25,7 +25,7 @@
                 @Html.DisplayFor(modelItem => item.CityName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CityId">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.CityId">Modify</a> |
                 <a asp-action="Details" asp-route-id="@item.CityId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.CityId">Delete</a>
             </td>

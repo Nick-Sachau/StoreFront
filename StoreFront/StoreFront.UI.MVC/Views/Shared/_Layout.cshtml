@@ -23,7 +23,6 @@
 
     <!-- Responsive CSS -->
     <link href="/css/responsive.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -109,13 +108,13 @@
                             <div class="top_single_area d-flex align-items-center">
                                 <!-- Logo Area -->
                                 <div class="top_logo">
-                                    <a asp-action="Index" asp-controller="Home"><img src="/img/core-img/logo.png" alt=""></a>
+                                    <a asp-action="Index" asp-controller="Home"><img src="/img/core-img/PokemonLogo.png" style="width: 50%; text-align: left;" alt=""></a>
                                 </div>
                                 <!-- Cart & Menu Area -->
                                 <div class="header-cart-menu d-flex align-items-center ml-auto">
                                     <!-- Cart Area -->
                                     <div class="cart">
-                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span> <i class="ti-bag"></i> Your Bag $20</a>
+                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity" style="height: 30px; width: 30px;font-size: 15px;line-height: 30px;">2</span> <i class="ti-bag" style="font-size:40px;"></i></a>
                                         <!-- Cart List Area Start -->
                                         <ul class="cart-list">
                                             <li>
@@ -173,19 +172,26 @@
                                     <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
                                         <ul class="navbar-nav animated" id="nav">
                                             <li class="nav-item active"><a class="nav-link" asp-action="Index" asp-controller="Home">Home</a></li>
+                                            <li class="nav-item"><a class="nav-link" asp-action="Shop" asp-controller="Home">Shop</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#">Orders</a></li> @*<span class="karl-level">hot</span>*@
+                                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" asp-action="" asp-controller="">Home</a>
-                                                    <a class="dropdown-item" asp-action="Shop" asp-controller="Home">Shop</a>
-                                                    <a class="dropdown-item" href="product-details.html">Product Details</a>
-                                                    <a class="dropdown-item" asp-action="Cart" asp-controller="Home">Cart</a>
-                                                    <a class="dropdown-item" href="checkout.html">Checkout</a>
+                                                    <a class="dropdown-item">Cities</a>
+                                                    <a class="dropdown-item">Order Pokemon</a>
+                                                    <a class="dropdown-item">Orders</a>
+                                                    <a class="dropdown-item">Pokemon</a>
+                                                    <a class="dropdown-item">Pokemon Types</a>
+                                                    <a class="dropdown-item">Trainers</a>
+                                                    <a class="dropdown-item">Types</a>
+                                                    @*<a class="dropdown-item" asp-action="" asp-controller="">Home</a>*@
+                                                    @*<a class="dropdown-item" href="product-details.html">Product Details</a>*@
+                                                    @*<a class="dropdown-item" asp-action="Cart" asp-controller="Home">Cart</a>*@
+                                                    @*<a class="dropdown-item" href="checkout.html">Checkout</a>*@
                                                 </div>
                                             </li>
-                                            <li class="nav-item"><a class="nav-link" href="#">Dresses</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#"><span class="karl-level">hot</span> Shoes</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                                         </ul>
                                     </div>
                                 </nav>
@@ -294,6 +300,8 @@
     <script src="/js/plugins.js"></script>
     <!-- Active js -->
     <script src="/js/active.js"></script>
+    <!-- Custom Script -->
+    <script src="/js/sctipt.js"></script>
 
     @RenderSection("Scripts", required: false)
 

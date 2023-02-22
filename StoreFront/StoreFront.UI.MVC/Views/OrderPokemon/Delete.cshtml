@@ -1,14 +1,14 @@
 ﻿@model StoreFront.DATA.EF.Models.OrderPokemon
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete " + Model.OrderPokemonId;
 }
 
-<h1>Delete</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>OrderPokemon</h4>
+    @*<h4>OrderPokemon</h4>*@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -39,7 +39,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="OrderPokemonId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete forever" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to Pokemon Orders</a>
     </form>
 </div>

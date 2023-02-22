@@ -1,12 +1,12 @@
 ﻿@model StoreFront.DATA.EF.Models.OrderPokemon
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit " + Model.OrderPokemonId;
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>OrderPokemon</h4>
+@*<h4>OrderPokemon</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Pokemon Orders</a>
 </div>
 
 @section Scripts {

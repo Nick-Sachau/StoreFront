@@ -1,12 +1,12 @@
 ﻿@model StoreFront.DATA.EF.Models.PokemonType
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create new Pokemon Type";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>PokemonType</h4>
+@*<h4>PokemonType</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,14 +21,14 @@
                 <select asp-for="PokemonId" class ="form-control" asp-items="ViewBag.PokemonId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Pokemon Types</a>
 </div>
 
 @section Scripts {
