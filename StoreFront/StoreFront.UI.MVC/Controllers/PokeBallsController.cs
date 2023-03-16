@@ -1,107 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StoreFront.DATA.EF.Models;
+using System.Drawing;
 using StoreFront.UI.MVC.Utilities;
 
 namespace StoreFront.UI.MVC.Controllers
 {
-    public class PokemonController : Controller
+    public class PokeBallsController : Controller
     {
         private readonly StoreFrontContext _context;
-        //added prop below for access to the wwwroot folder
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PokemonController(StoreFrontContext context, IWebHostEnvironment webHostEnvironment)
+        public PokeBallsController(StoreFrontContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;//added
         }
 
-        // GET: Pokemon
-        [AllowAnonymous]
+        // GET: PokeBalls
         public async Task<IActionResult> Index()
         {
-            var storeFrontContext = _context.Pokemons.Include(p => p.City).Include(p => p.PokeBall);
-            return View(await storeFrontContext.ToListAsync());
+              return View(await _context.PokeBalls.ToListAsync());
         }
 
-        // GET: Pokemon/Details/5
+        // GET: PokeBalls/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Pokemons == null)
+            if (id == null || _context.PokeBalls == null)
             {
                 return NotFound();
             }
 
-            var pokemon = await _context.Pokemons
-                .Include(p => p.City)
-                .Include(p => p.PokeBall)
-                .FirstOrDefaultAsync(m => m.PokemonId == id);
-            if (pokemon == null)
+            var pokeBall = await _context.PokeBalls
+                .FirstOrDefaultAsync(m => m.PokeballId == id);
+            if (pokeBall == null)
             {
                 return NotFound();
             }
 
-            return View(pokemon);
+            return View(pokeBall);
         }
 
-        // GET: Pokemon/Create
-        [Authorize(Roles = "Admin")]
+        // GET: PokeBalls/Create
         public IActionResult Create()
         {
-            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityName");
-            ViewData["PokeBallId"] = new SelectList(_context.PokeBalls, "PokeballId", "PokeballName");
             return View();
         }
 
-        // POST: Pokemon/Create
+        // POST: PokeBalls/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("PokemonId,PokemonName,PokemonPrice,PokemonDescription,InStock,IsDiscontinued,CityId,PokemonImage,PokeBallId,Image,DateCreated")] Pokemon pokemon)
+        public async Task<IActionResult> Create([Bind("PokeballId,PokeballName,Description,Image,BallImage")] PokeBall pokeBall)
         {
-            pokemon.DateCreated = DateTime.Now;
             if (ModelState.IsValid)
             {
 
                 #region File Upload - CREATE
                 //Check to see if a file was uploaded
-                if (pokemon.Image != null)
+                if (pokeBall.BallImage != null)
                 {
                     //Check the file type 
                     //- retrieve the extension of the uploaded file
-                    string ext = Path.GetExtension(pokemon.Image.FileName);
+                    string ext = Path.GetExtension(pokeBall.BallImage.FileName);
 
                     //- Create a list of valid extensions to check against
                     string[] validExts = { ".jpeg", ".jpg", ".gif", ".png" };
 
                     //- verify the uploaded file has an extension matching one of the extensions in the list above
                     //- AND verify file size will work with our .NET app
-                    if (validExts.Contains(ext.ToLower()) && pokemon.Image.Length < 4_194_303)//underscores don't change the number, they just make it easier to read
+                    if (validExts.Contains(ext.ToLower()) && pokeBall.BallImage.Length < 4_194_303)//underscores don't change the number, they just make it easier to read
                     {
                         //Generate a unique filename
-                        pokemon.PokemonImage = Guid.NewGuid() + ext;
+                        pokeBall.Image = Guid.NewGuid() + ext;
 
                         //Save the file to the web server (here, saving to wwwroot/images)
                         //To access wwwroot, add a property to the controller for the _webHostEnvironment (see the top of this class for our example)
                         //Retrieve the path to wwwroot
                         string webRootPath = _webHostEnvironment.WebRootPath;
                         //variable for the full image path --> this is where we will save the image
-                        string fullImagePath = webRootPath + "/img/pokemon-img/";
+                        string fullImagePath = webRootPath + "/img/pokeball-img/";
 
                         //Create a MemoryStream to read the image into the server memory
                         using (var memoryStream = new MemoryStream())
                         {
-                            await pokemon.Image.CopyToAsync(memoryStream);//transfer file from the request to server memory
+                            await pokeBall.BallImage.CopyToAsync(memoryStream);//transfer file from the request to server memory
                             using (var img = Image.FromStream(memoryStream))//add a using statement for the Image class (using System.Drawing)
                             {
                                 //now, send the image to the ImageUtility for resizing and thumbnail creation
@@ -114,7 +104,7 @@ namespace StoreFront.UI.MVC.Controllers
                                 int maxImageSize = 500;//in pixels
                                 int maxThumbSize = 100;
 
-                                ImageUtility.ResizeImage(fullImagePath, pokemon.PokemonImage, img, maxImageSize, maxThumbSize);
+                                ImageUtility.ResizeImage(fullImagePath, pokeBall.Image, img, maxImageSize, maxThumbSize);
                                 //myFile.Save("path/to/folder", "filename"); - how to save something that's NOT an image
 
                             }
@@ -125,48 +115,42 @@ namespace StoreFront.UI.MVC.Controllers
                 {
                     //If no image was uploaded, assign a default filename
                     //Will also need to download a default image and name it 'noimage.png' -> copy it to the /images folder
-                    pokemon.PokemonImage = "noimage.png";
+                    pokeBall.Image = "noimage.png";
                 }
 
                 #endregion
 
-                _context.Add(pokemon);
+                _context.Add(pokeBall);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityName", pokemon.CityId);
-            ViewData["PokeBallId"] = new SelectList(_context.PokeBalls, "PokeballId", "PokeballName", pokemon.PokeBallId);
-            return View(pokemon);
+            return View(pokeBall);
         }
 
-        // GET: Pokemon/Edit/5
-        [Authorize(Roles = "Admin")]
+        // GET: PokeBalls/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Pokemons == null)
+            if (id == null || _context.PokeBalls == null)
             {
                 return NotFound();
             }
 
-            var pokemon = await _context.Pokemons.FindAsync(id);
-            if (pokemon == null)
+            var pokeBall = await _context.PokeBalls.FindAsync(id);
+            if (pokeBall == null)
             {
                 return NotFound();
             }
-            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityName", pokemon.CityId);
-            ViewData["PokeBallId"] = new SelectList(_context.PokeBalls, "PokeballId", "PokeballName", pokemon.PokeBallId);
-            return View(pokemon);
+            return View(pokeBall);
         }
 
-        // POST: Pokemon/Edit/5
+        // POST: PokeBalls/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("PokemonId,PokemonName,PokemonPrice,PokemonDescription,InStock,IsDiscontinued,CityId,PokemonImage,PokeBallId,Image,DateCreated")] Pokemon pokemon)
+        public async Task<IActionResult> Edit(int id, [Bind("PokeballId,PokeballName,Description,Image,BallImage")] PokeBall pokeBall)
         {
-            if (id != pokemon.PokemonId)
+            if (id != pokeBall.PokeballId)
             {
                 return NotFound();
             }
@@ -176,25 +160,25 @@ namespace StoreFront.UI.MVC.Controllers
 
                 #region EDIT File Upload
                 //retain old image file name so we can delete if a new file was uploaded
-                string oldImageName = pokemon.PokemonImage;
+                string oldImageName = pokeBall.Image;
 
                 //Check if the user uploaded a file
-                if (pokemon.Image != null)
+                if (pokeBall.BallImage != null)
                 {
                     //get the file's extension
-                    string ext = Path.GetExtension(pokemon.Image.FileName);
+                    string ext = Path.GetExtension(pokeBall.BallImage.FileName);
 
                     //list valid extensions
                     string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
 
                     //check the file's extension against the list of valid extensions
-                    if (validExts.Contains(ext.ToLower()) && pokemon.Image.Length < 4_194_303)
+                    if (validExts.Contains(ext.ToLower()) && pokeBall.BallImage.Length < 4_194_303)
                     {
                         //generate a unique file name
-                        pokemon.PokemonImage = Guid.NewGuid() + ext;
+                        pokeBall.Image = Guid.NewGuid() + ext;
                         //build our file path to save the image
                         string webRootPath = _webHostEnvironment.WebRootPath;
-                        string fullPath = webRootPath + "/img/pokemon-img/";
+                        string fullPath = webRootPath + "/img/pokeball-img/";
 
                         //Delete the old image
                         if (oldImageName != "noimage.png")
@@ -205,12 +189,12 @@ namespace StoreFront.UI.MVC.Controllers
                         //Save the new image to webroot
                         using (var memoryStream = new MemoryStream())
                         {
-                            await pokemon.Image.CopyToAsync(memoryStream);
+                            await pokeBall.BallImage.CopyToAsync(memoryStream);
                             using (var img = Image.FromStream(memoryStream))
                             {
                                 int maxImageSize = 500;
                                 int maxThumbSize = 100;
-                                ImageUtility.ResizeImage(fullPath, pokemon.PokemonImage, img, maxImageSize, maxThumbSize);
+                                ImageUtility.ResizeImage(fullPath, pokeBall.Image, img, maxImageSize, maxThumbSize);
                             }
                         }
 
@@ -220,12 +204,12 @@ namespace StoreFront.UI.MVC.Controllers
 
                 try
                 {
-                    _context.Update(pokemon);
+                    _context.Update(pokeBall);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PokemonExists(pokemon.PokemonId))
+                    if (!PokeBallExists(pokeBall.PokeballId))
                     {
                         return NotFound();
                     }
@@ -236,55 +220,49 @@ namespace StoreFront.UI.MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityName", pokemon.CityId);
-            ViewData["PokeBallId"] = new SelectList(_context.PokeBalls, "PokeballId", "PokeballName", pokemon.PokeBallId);
-            return View(pokemon);
+            return View(pokeBall);
         }
 
-        // GET: Pokemon/Delete/5
-        [Authorize(Roles = "Admin")]
+        // GET: PokeBalls/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Pokemons == null)
+            if (id == null || _context.PokeBalls == null)
             {
                 return NotFound();
             }
 
-            var pokemon = await _context.Pokemons
-                .Include(p => p.City)
-                .Include(p => p.PokeBall)
-                .FirstOrDefaultAsync(m => m.PokemonId == id);
-            if (pokemon == null)
+            var pokeBall = await _context.PokeBalls
+                .FirstOrDefaultAsync(m => m.PokeballId == id);
+            if (pokeBall == null)
             {
                 return NotFound();
             }
 
-            return View(pokemon);
+            return View(pokeBall);
         }
 
-        // POST: Pokemon/Delete/5
+        // POST: PokeBalls/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Pokemons == null)
+            if (_context.PokeBalls == null)
             {
-                return Problem("Entity set 'StoreFrontContext.Pokemons'  is null.");
+                return Problem("Entity set 'StoreFrontContext.PokeBalls'  is null.");
             }
-            var pokemon = await _context.Pokemons.FindAsync(id);
-            if (pokemon != null)
+            var pokeBall = await _context.PokeBalls.FindAsync(id);
+            if (pokeBall != null)
             {
-                _context.Pokemons.Remove(pokemon);
+                _context.PokeBalls.Remove(pokeBall);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PokemonExists(int id)
+        private bool PokeBallExists(int id)
         {
-          return _context.Pokemons.Any(e => e.PokemonId == id);
+          return _context.PokeBalls.Any(e => e.PokeballId == id);
         }
     }
 }

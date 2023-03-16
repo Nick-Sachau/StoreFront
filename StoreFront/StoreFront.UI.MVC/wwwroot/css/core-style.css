@@ -1140,6 +1140,8 @@ img {
     color: rgba(255, 255, 255, 0.8);
     font-size: 36px;
     line-height: 72px;
+    background: none;
+    outline: none;
 }
 
 .product-img .product-quicview > a:hover {

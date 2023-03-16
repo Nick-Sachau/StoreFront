@@ -25,6 +25,7 @@ namespace StoreFront.DATA.EF.Models
         public virtual DbSet<City> Cities { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderPokemon> OrderPokemons { get; set; } = null!;
+        public virtual DbSet<PokeBall> PokeBalls { get; set; } = null!;
         public virtual DbSet<Pokemon> Pokemons { get; set; } = null!;
         public virtual DbSet<PokemonType> PokemonTypes { get; set; } = null!;
         public virtual DbSet<TrainerDetail> TrainerDetails { get; set; } = null!;
@@ -199,6 +200,24 @@ namespace StoreFront.DATA.EF.Models
                     .HasConstraintName("FK_OrderPokemon_Pokemon");
             });
 
+            modelBuilder.Entity<PokeBall>(entity =>
+            {
+                entity.Property(e => e.PokeballId).HasColumnName("PokeballID");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Image)
+                    .HasMaxLength(75)
+                    .IsUnicode(false)
+                    .HasColumnName("image");
+
+                entity.Property(e => e.PokeballName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Pokemon>(entity =>
             {
                 entity.ToTable("Pokemon");
@@ -207,9 +226,9 @@ namespace StoreFront.DATA.EF.Models
 
                 entity.Property(e => e.CityId).HasColumnName("CityID");
 
-                entity.Property(e => e.PokemonBall)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.PokeBallId).HasColumnName("PokeBallID");
 
                 entity.Property(e => e.PokemonDescription)
                     .HasMaxLength(500)
@@ -229,6 +248,11 @@ namespace StoreFront.DATA.EF.Models
                     .WithMany(p => p.Pokemons)
                     .HasForeignKey(d => d.CityId)
                     .HasConstraintName("FK_Pokemon_Shelter");
+
+                entity.HasOne(d => d.PokeBall)
+                    .WithMany(p => p.Pokemons)
+                    .HasForeignKey(d => d.PokeBallId)
+                    .HasConstraintName("FK_Pokemon_PokeBalls");
             });
 
             modelBuilder.Entity<PokemonType>(entity =>

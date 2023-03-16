@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Pokemons\**" />
+    <Content Remove="Views\Pokemons\**" />
+    <EmbeddedResource Remove="Views\Pokemons\**" />
+    <None Remove="Views\Pokemons\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="_Archive\css\animate.css" />
     <None Remove="_Archive\css\bootstrap.min.css" />
     <None Remove="_Archive\css\core-style.css" />
@@ -280,10 +287,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\StoreFront.DATA.EF\StoreFront.DATA.EF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\pokeball-img\" />
   </ItemGroup>
 
 </Project>

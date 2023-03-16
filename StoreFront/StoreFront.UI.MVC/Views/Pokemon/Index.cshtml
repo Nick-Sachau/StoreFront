@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.PokemonImage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PokemonBall)
+                @Html.DisplayNameFor(model => model.PokeBallId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.City)
@@ -58,10 +58,11 @@
                 @Html.DisplayFor(modelItem => item.IsDiscontinued)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PokemonImage)
+                @*@Html.DisplayFor(modelItem => item.PokemonImage)*@
+                <img src="~/img/pokemon-img/t_@item.PokemonImage" class="img-fluid" alt="@item.PokemonDescription" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PokemonBall)
+                    @Html.DisplayFor(modelItem => item.PokeBallId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.City.CityName)

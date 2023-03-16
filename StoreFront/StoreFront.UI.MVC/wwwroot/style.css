@@ -8,6 +8,26 @@
     :: Last Updated: 09 January 2018
     ---------------------------------------------------------- */
 
-    /* -------------------------------------------------
-    ============ PLACE YOUR CUSTOM CSS HERE ============
-    
+/* -------------------------------------------------
+    ============ PLACE YOUR CUSTOM CSS HERE ============*/
+
+.form-check-input {
+    width: 100%;
+}
+
+.catagory-content {
+    background: rgba(42, 117, 187, .95);
+    width: 100%;
+    box-shadow: 5px 5px 10px black;
+    padding: 2em;
+}
+
+.modal-content {
+    box-shadow: 10px 10px 30px rgb(0 0 0 / .7);
+}
+
+button.close {
+    text-align: right;
+    padding-right: 0.5em;
+    padding-top: 0.2em;
+}

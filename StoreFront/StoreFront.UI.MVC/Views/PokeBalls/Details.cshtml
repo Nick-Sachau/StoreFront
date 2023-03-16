@@ -1,0 +1,37 @@
+﻿@model StoreFront.DATA.EF.Models.PokeBall
+
+@{
+    ViewData["Title"] = Model.PokeballName + " Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @*<h4>PokeBall</h4>*@
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PokeballName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PokeballName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class = "col-sm-10">
+            @*@Html.DisplayFor(model => model.Image)*@
+            <img src="~/img/pokeball-img/@Model.Image" class="img-fluid" alt="@Model.Description" />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PokeballId">Modify</a> |
+    <a asp-action="Index">Back to Pokeballs</a>
+</div>

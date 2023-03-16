@@ -1,6 +1,5 @@
-﻿@{
-
-}
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,14 +14,14 @@
     <title>@ViewData["Title"] | Store Front</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="/img/core-img/favicon.ico">
+    <link rel="icon" href="~/img/core-img/favicon.png">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="/css/core-style.css">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="~/css/core-style.css">
+    <link rel="stylesheet" href="~/style.css">
 
     <!-- Responsive CSS -->
-    <link href="/css/responsive.css" rel="stylesheet">
+    <link href="~/css/responsive.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,57 +36,21 @@
                 <h6>Categories</h6>
                 <ul id="menu-content" class="menu-content collapse out">
                     <!-- Single Item -->
-                    <li data-toggle="collapse" data-target="#women" class="collapsed active">
-                        <a href="#">Woman wear <span class="arrow"></span></a>
-                        <ul class="sub-menu collapse" id="women">
-                            <li><a href="#">Midi Dresses</a></li>
-                            <li><a href="#">Maxi Dresses</a></li>
-                            <li><a href="#">Prom Dresses</a></li>
-                            <li><a href="#">Little Black Dresses</a></li>
-                            <li><a href="#">Mini Dresses</a></li>
+                    <li data-toggle="collapse" data-target="#women">
+                        <a href="#">Pokemon <span class="arrow"></span></a>
+                        <ul class="sub-menu collapse show" id="women">
+                            <li><a href="#">All Pokemon</a></li>
+                            <li><a href="#">Rare Pokemon</a></li>
+                            <li><a href="#">Shiny Pokemon</a></li>
                         </ul>
                     </li>
                     <!-- Single Item -->
                     <li data-toggle="collapse" data-target="#man" class="collapsed">
-                        <a href="#">Man Wear <span class="arrow"></span></a>
+                        <a href="#">Pokeballs <span class="arrow"></span></a>
                         <ul class="sub-menu collapse" id="man">
-                            <li><a href="#">Man Dresses</a></li>
+                            <li><a href="#">All Pokeballs</a></li>
                             <li><a href="#">Man Black Dresses</a></li>
                             <li><a href="#">Man Mini Dresses</a></li>
-                        </ul>
-                    </li>
-                    <!-- Single Item -->
-                    <li data-toggle="collapse" data-target="#kids" class="collapsed">
-                        <a href="#">Children <span class="arrow"></span></a>
-                        <ul class="sub-menu collapse" id="kids">
-                            <li><a href="#">Children Dresses</a></li>
-                            <li><a href="#">Mini Dresses</a></li>
-                        </ul>
-                    </li>
-                    <!-- Single Item -->
-                    <li data-toggle="collapse" data-target="#bags" class="collapsed">
-                        <a href="#">Bags &amp; Purses <span class="arrow"></span></a>
-                        <ul class="sub-menu collapse" id="bags">
-                            <li><a href="#">Bags</a></li>
-                            <li><a href="#">Purses</a></li>
-                        </ul>
-                    </li>
-                    <!-- Single Item -->
-                    <li data-toggle="collapse" data-target="#eyewear" class="collapsed">
-                        <a href="#">Eyewear <span class="arrow"></span></a>
-                        <ul class="sub-menu collapse" id="eyewear">
-                            <li><a href="#">Eyewear Style 1</a></li>
-                            <li><a href="#">Eyewear Style 2</a></li>
-                            <li><a href="#">Eyewear Style 3</a></li>
-                        </ul>
-                    </li>
-                    <!-- Single Item -->
-                    <li data-toggle="collapse" data-target="#footwear" class="collapsed">
-                        <a href="#">Footwear <span class="arrow"></span></a>
-                        <ul class="sub-menu collapse" id="footwear">
-                            <li><a href="#">Footwear 1</a></li>
-                            <li><a href="#">Footwear 2</a></li>
-                            <li><a href="#">Footwear 3</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -174,24 +137,35 @@
                                             <li class="nav-item active"><a class="nav-link" asp-action="Index" asp-controller="Home">Home</a></li>
                                             <li class="nav-item"><a class="nav-link" asp-action="Shop" asp-controller="Home">Shop</a></li>
                                             <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#">Orders</a></li> @*<span class="karl-level">hot</span>*@
+                                            @if (signInManager.IsSignedIn(User))
+                                            {   
+                                                <li class="nav-item"><a class="nav-link" href="#">Orders</a></li> @*<span class="karl-level">hot</span>*@
+                                            }
                                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item">Cities</a>
-                                                    <a class="dropdown-item">Order Pokemon</a>
-                                                    <a class="dropdown-item">Orders</a>
-                                                    <a class="dropdown-item">Pokemon</a>
-                                                    <a class="dropdown-item">Pokemon Types</a>
-                                                    <a class="dropdown-item">Trainers</a>
-                                                    <a class="dropdown-item">Types</a>
-                                                    @*<a class="dropdown-item" asp-action="" asp-controller="">Home</a>*@
-                                                    @*<a class="dropdown-item" href="product-details.html">Product Details</a>*@
-                                                    @*<a class="dropdown-item" asp-action="Cart" asp-controller="Home">Cart</a>*@
-                                                    @*<a class="dropdown-item" href="checkout.html">Checkout</a>*@
-                                                </div>
-                                            </li>
+
+                                            <partial name="_LoginPartial" />
+                                            
+
+                                            @if(signInManager.IsSignedIn(User))
+                                            {
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                                    <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                                        <a asp-action="Index" asp-controller="Cities" class="dropdown-item">Cities</a>
+                                                        <a asp-action="Index" asp-controller="Pokemon" class="dropdown-item">Pokemon</a>
+                                                        <a asp-action="Index" asp-controller="PokemonTypes" class="dropdown-item">Pokemon Types</a>
+                                                        <a asp-action="Index" asp-controller="TrainerDetails" class="dropdown-item">Trainers</a>
+                                                        <a asp-action="Index" asp-controller="Types" class="dropdown-item">Types</a>
+                                                        <a asp-action="Index" asp-controller="PokeBalls" class="dropdown-item">Pokeballs</a>
+                                                        <a asp-action="ListUsers" asp-controller="Administration" class="dropdown-item">Users</a>
+                                                        <a asp-action="ListRoles" asp-controller="Administration" class="dropdown-item">Roles</a>
+                                                        @*<a class="dropdown-item" asp-action="" asp-controller="">Home</a>*@
+                                                        @*<a class="dropdown-item" href="product-details.html">Product Details</a>*@
+                                                        @*<a class="dropdown-item" asp-action="Cart" asp-controller="Home">Cart</a>*@
+                                                        @*<a class="dropdown-item" href="checkout.html">Checkout</a>*@
+                                                    </div>
+                                                </li>
+                                            }
                                         </ul>
                                     </div>
                                 </nav>
@@ -301,7 +275,7 @@
     <!-- Active js -->
     <script src="/js/active.js"></script>
     <!-- Custom Script -->
-    <script src="/js/sctipt.js"></script>
+    <script src="/js/script.js"></script>
 
     @RenderSection("Scripts", required: false)
 

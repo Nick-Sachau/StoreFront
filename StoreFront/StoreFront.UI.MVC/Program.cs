@@ -24,9 +24,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddRoleManager < RoleManager < IdentityRole >> ()
     .AddEntityFrameworkStores < ApplicationDbContext > ();
-
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);//How long the sessioon will be active when idling
+    options.Cookie.HttpOnly = true; // Allows us to set cookie options
+    options.Cookie.IsEssential = true; //Can't be declined - if someone wants to use our site, the MUST accept this cookie
+});
 
 var app = builder.Build();
 

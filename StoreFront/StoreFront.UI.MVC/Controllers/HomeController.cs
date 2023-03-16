@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StoreFront.DATA.EF.Models;
 using StoreFront.UI.MVC.Models;
 using System.Diagnostics;
 
@@ -7,15 +9,18 @@ namespace StoreFront.UI.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly StoreFrontContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, StoreFrontContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var storeFrontContext = _context.Pokemons.Include(p => p.City).Include(p => p.PokeBall);
+            return View(storeFrontContext.ToList());
         }
 
         public IActionResult Privacy()
@@ -46,7 +51,8 @@ namespace StoreFront.UI.MVC.Controllers
 
         public IActionResult Shop()
         {
-            return View();
+            var pokemon = _context.Pokemons;
+            return View(pokemon);
         }
     }
 }

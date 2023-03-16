@@ -44,13 +44,14 @@
             @Html.DisplayNameFor(model => model.PokemonImage)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PokemonImage)
+            @*@Html.DisplayFor(model => model.PokemonImage)*@
+            <img src="~/img/pokemon-img/@Model.PokemonImage" class="img-fluid" alt="@Model.PokemonDescription" />
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PokemonBall)
+            @Html.DisplayNameFor(model => model.PokeBallId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PokemonBall)
+            @Html.DisplayFor(model => model.PokeBallId)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.City)

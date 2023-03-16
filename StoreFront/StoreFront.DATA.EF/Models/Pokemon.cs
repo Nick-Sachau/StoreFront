@@ -19,9 +19,11 @@ namespace StoreFront.DATA.EF.Models
         public bool IsDiscontinued { get; set; }
         public int? CityId { get; set; }
         public string? PokemonImage { get; set; }
-        public string? PokemonBall { get; set; }
+        public int? PokeBallId { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public virtual City? City { get; set; }
+        public virtual PokeBall? PokeBall { get; set; }
         public virtual ICollection<OrderPokemon> OrderPokemons { get; set; }
         public virtual ICollection<PokemonType> PokemonTypes { get; set; }
     }
